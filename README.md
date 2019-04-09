@@ -29,6 +29,12 @@ ITC 的常用技术在 Android 平台上的测试结果：
 3. unix domain socket: Only root user cans create socket file.
 4. TCP or UDP / IP: The root and the user belong to "inet(3003)" group can use inet.
 
+关于 unix domain socket: 
+* 在 Android SDK & NDK 中可以使用 unix domain socket。参见项目[2]与[3]。
+* socket address 使用 Linux abstract namespace，而不是 filesystem。
+* 在 adb shell 环境中，只有 root 用户可以使用 unix domain socket。
+* 看起来是与 Android 权限管理有关。
+
 为了快一点，只能使用 unnamed pipe 技术。还好 unnamed pipe 从设计之初就是人人可用，自家内部自己玩，倒是很符合我的要求。Android 对此没有设置权限障碍，否则 Google 就成了众矢之的了。但对于 unnamed pipe 技术，各个 IPC library 都没什么兴趣做高级一点的封装。只有自己来了。想偷懒一点都不成:-(。
 * [libevent](http://libevent.org/) : 一切以 File Descriptor 为中心进行封装。看起来简单一点，就它了。
 * [libuv](http://libuv.org/) : 一切以 Asynchronous Event 为中心进行封装。File Descriptor 只是异步事件来源的一种。还有其它很多异步事件来源的处理。稍微复杂了一些，多了些我不要的处理代码。放弃了。
@@ -38,3 +44,7 @@ ITC 的常用技术在 Android 平台上的测试结果：
 
 # 参考文件
 1. [Inter-process communication](https://en.wikipedia.org/wiki/Inter-process_communication)
+2. [Shared Memory IPC](https://github.com/sjfricke/NDK-Socket-IPC)
+3. [android-unix-socket-client-server](https://github.com/frogoscar/android-unix-socket-client-server)
+
+
