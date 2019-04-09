@@ -27,9 +27,9 @@ ITC 的常用技术在 Android 平台上的测试结果：
 1. unnamed pipe: OK
 2. named pipe: Only root user cans create fifo file.
 3. unix domain socket: Only root user cans create filesystem socket.
-  * 在 Android 中可以使用 unix domain socket。参见项目[3]与[4]。
-  * 在 Android 中的 socket address 使用的是 Linux abstract namespace。据说 abstract namespace 安全性更好一些。
-  * 使用 Linux abstract namespace socket 有一个技巧，参见文档[2]。
+   * 在 Android 中可以使用 unix domain socket。参见项目[3]与[4]。
+   * 在 Android 中的 socket address 使用的是 Linux abstract namespace。据说 abstract namespace 安全性更好一些。
+   * 使用 Linux abstract namespace socket 有一个技巧，参见文档[2]。
 4. TCP or UDP / IP: The root and the user belong to "inet(3003)" group can use inet.
 
 为了快一点，只能使用 unnamed pipe 技术。还好 unnamed pipe 从设计之初就是人人可用，自家内部自己玩，倒是很符合我的要求。Android 对此没有设置权限障碍，否则 Google 就成了众矢之的了。但对于 unnamed pipe 技术，各个 IPC library 都没什么兴趣做高级一点的封装。只有自己来了。想偷懒一点都不成:-(。
