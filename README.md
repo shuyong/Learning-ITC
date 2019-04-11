@@ -28,7 +28,7 @@ ITC 的常用技术在 Android 平台上的测试结果：
 2. named pipe: Only root user cans create fifo file.
 3. unix domain socket: Only root user cans create filesystem socket.
    * 在 Android 中可以使用 unix domain socket。参见项目[3]与[4]。
-   * 在 Android 中的 socket address 使用的是 Linux abstract namespace。据说 abstract namespace 安全性更好一些。
+   * 在 Android 中的 socket address 使用的是 Linux abstract namespace。使用 abstract namespace 能使文件系统干净一些，不会留下垃圾文件。但是安全性要差一些，需要自己检查资格证书(credentials)[5]。
    * 使用 Linux abstract namespace socket 有一个技巧，参见文档[2]。
 4. TCP or UDP / IP: The root and the user belong to "inet(3003)" group can use inet.
 
@@ -42,5 +42,6 @@ ITC 的常用技术在 Android 平台上的测试结果：
 2. [Android AHardwareBuffer Shared Memory over Unix Domain Sockets](https://medium.com/@spencerfricke/android-ahardwarebuffer-shared-memory-over-unix-domain-sockets-7b27b1271b36)
 3. [Shared Memory IPC](https://github.com/sjfricke/NDK-Socket-IPC)
 4. [android-unix-socket-client-server](https://github.com/frogoscar/android-unix-socket-client-server)
+5. [network/unixdomain](https://github.com/troydhanson/network/tree/master/unixdomain)
 
 
